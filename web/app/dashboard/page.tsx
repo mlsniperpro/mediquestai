@@ -20,12 +20,13 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { CalorieTrackingModal } from '@/components/CalorieTrackingModal';
+import { MedicalRecordsUploadModal } from '@/components/MedicalRecordsUploadModal';
 
 interface FeatureCard {
   title: string;
   description: string;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  href: string;
+  href?: string;
   gradient: string;
   comingSoon?: boolean;
   onClick?: () => void;
@@ -34,6 +35,8 @@ interface FeatureCard {
 export default function Dashboard() {
   const { userProfile } = useAuth();
   const [isCalorieModalOpen, setIsCalorieModalOpen] = useState(false);
+  const [isMedicalRecordsModalOpen, setIsMedicalRecordsModalOpen] = useState(false);
+  const [medicalRecordsContext, setMedicalRecordsContext] = useState('general');
   
   // Get role-specific configuration
   const currentRoleConfig = userProfile?.role ? roleConfig[userProfile.role] : null;
@@ -73,11 +76,13 @@ export default function Dashboard() {
     },
     {
       title: 'Medical Records',
-      description: 'Securely store and manage your medical history, lab results, and prescriptions',
+      description: 'Upload and manage your medical history, test results, images, and documents for AI personalization',
       icon: DocumentTextIcon,
-      href: '/dashboard/medical-records',
-      gradient: 'from-teal-400 to-cyan-500',
-      comingSoon: true
+      onClick: () => {
+        setMedicalRecordsContext('individual');
+        setIsMedicalRecordsModalOpen(true);
+      },
+      gradient: 'from-teal-400 to-cyan-500'
     },
     {
       title: 'Book Consultations',
@@ -92,9 +97,12 @@ export default function Dashboard() {
   const doctorFeatures: FeatureCard[] = [
     {
       title: 'Patient Management',
-      description: 'Comprehensive patient records, treatment history, and care coordination tools',
+      description: 'Upload patient consultation videos, medical documents, and records for comprehensive care',
       icon: UserGroupIcon,
-      href: '/dashboard/patients',
+      onClick: () => {
+        setMedicalRecordsContext('healthcare_professional');
+        setIsMedicalRecordsModalOpen(true);
+      },
       gradient: 'from-blue-400 to-indigo-600'
     },
     {
@@ -246,7 +254,7 @@ export default function Dashboard() {
                   <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed break-words">{feature.description}</p>
                 </div>
               </button>
-            ) : (
+            ) : feature.href ? (
               <Link href={feature.href} className="block w-full">
                 <div className="relative w-full bg-card border border-border rounded-lg p-4 sm:p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer group">
                   <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm group-hover:shadow-md transition-shadow`}>
@@ -256,7 +264,7 @@ export default function Dashboard() {
                   <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed break-words">{feature.description}</p>
                 </div>
               </Link>
-            )}
+            ) : null}
           </div>
         ))}
       </div>
@@ -281,6 +289,16 @@ export default function Dashboard() {
             <ChartBarIcon className="w-4 h-4 text-muted-foreground" />
             <span className="text-sm font-medium text-card-foreground">Analytics</span>
           </Link>
+          <button 
+            onClick={() => {
+              setMedicalRecordsContext('quick-access');
+              setIsMedicalRecordsModalOpen(true);
+            }}
+            className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent transition-colors w-full text-left"
+          >
+            <DocumentTextIcon className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm font-medium text-card-foreground">Upload Records</span>
+          </button>
         </div>
       </div>
 
@@ -288,6 +306,19 @@ export default function Dashboard() {
       <CalorieTrackingModal 
         isOpen={isCalorieModalOpen}
         onClose={() => setIsCalorieModalOpen(false)}
+      />
+
+      {/* Medical Records Upload Modal */}
+      <MedicalRecordsUploadModal
+        isOpen={isMedicalRecordsModalOpen}
+        onClose={() => setIsMedicalRecordsModalOpen(false)}
+        context={medicalRecordsContext}
+        onUploadComplete={(files, medicalHistory) => {
+          console.log('Uploaded files:', files);
+          console.log('Medical history:', medicalHistory);
+          // Here you can handle the uploaded files and medical history
+          // e.g., save to database, process with AI, etc.
+        }}
       />
     </div>
   );

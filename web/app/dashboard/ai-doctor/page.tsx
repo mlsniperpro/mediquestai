@@ -15,6 +15,7 @@ import {
   ChevronRightIcon
 } from '@heroicons/react/24/outline';
 import { Button } from '@/components/ui/Button';
+import { MedicalRecordsButton } from '@/components/MedicalRecordsButton';
 
 interface AIDoctor {
   id: string;
@@ -475,10 +476,29 @@ export default function AIDoctorPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 lg:p-6">
-        <h1 className="text-xl lg:text-2xl font-bold text-card-foreground mb-2">AI Doctor Consultation</h1>
-        <p className="text-sm lg:text-base text-muted-foreground">
-          Get instant access to specialized AI doctors available 24/7 for your health concerns
-        </p>
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div className="flex-1">
+            <h1 className="text-xl lg:text-2xl font-bold text-card-foreground mb-2">AI Doctor Consultation</h1>
+            <p className="text-sm lg:text-base text-muted-foreground">
+              Get instant access to specialized AI doctors available 24/7 for your health concerns
+            </p>
+          </div>
+          <div className="flex-shrink-0">
+            <MedicalRecordsButton
+              context="ai-doctor"
+              variant="outline"
+              size="sm"
+              className="bg-white/50 hover:bg-white/80 border-blue-300"
+              onUploadComplete={(files, medicalHistory) => {
+                console.log('Medical records uploaded for AI Doctor:', files);
+                console.log('Medical history for AI Doctor:', medicalHistory);
+                // Here you can process the uploaded files and medical history for better AI consultation
+              }}
+            >
+              Upload Medical Records
+            </MedicalRecordsButton>
+          </div>
+        </div>
       </div>
 
       {/* Specialty Filter */}
