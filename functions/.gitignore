@@ -93,3 +93,40 @@ jspm_packages/
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# Rust-specific files for canister backend
+# Compiled Rust binaries
+target/
+**/*.rs.bk
+*.pdb
+
+# Cargo lock file (uncomment if you want to ignore it)
+# Cargo.lock
+
+# Internet Computer (IC) canister-specific files
+.dfx/
+.vessel/
+canister_ids.json
+.ic-assets.json
+
+# WASM files
+*.wasm
+*.wasm.gz
+
+# IC-specific build artifacts
+.dfinity/
+dfx.json.backup
+
+# Candid interface files (generated)
+*.did
+
+# IC replica state
+.replica-configuration/
+
+# Motoko-specific (if using Motoko alongside Rust)
+.moc/
+.mo/
+
+# Additional Rust toolchain files
+rust-toolchain
+rust-toolchain.toml
