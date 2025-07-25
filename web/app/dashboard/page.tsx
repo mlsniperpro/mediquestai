@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { roleConfig } from '@/config/navigation';
 import { 
@@ -18,6 +19,7 @@ import {
   CogIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { CalorieTrackingModal } from '@/components/CalorieTrackingModal';
 
 interface FeatureCard {
   title: string;
@@ -26,10 +28,12 @@ interface FeatureCard {
   href: string;
   gradient: string;
   comingSoon?: boolean;
+  onClick?: () => void;
 }
 
 export default function Dashboard() {
   const { userProfile } = useAuth();
+  const [isCalorieModalOpen, setIsCalorieModalOpen] = useState(false);
   
   // Get role-specific configuration
   const currentRoleConfig = userProfile?.role ? roleConfig[userProfile.role] : null;
@@ -40,9 +44,9 @@ export default function Dashboard() {
       title: 'Track Calories',
       description: 'Upload or take pictures of your food to get instant calorie information and nutritional analysis',
       icon: CameraIcon,
-      href: '/dashboard/calorie-tracker',
+      href: '#',
       gradient: 'from-green-400 to-blue-500',
-      comingSoon: true
+      onClick: () => setIsCalorieModalOpen(true)
     },
     {
       title: 'Get Detailed Exercise Plan',
@@ -204,6 +208,18 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
+      {/* Welcome Section */}
+      {currentRoleConfig && (
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            {currentRoleConfig.welcomeTitle}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            {currentRoleConfig.welcomeDescription}
+          </p>
+        </div>
+      )}
+
       {/* Feature Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {features.map((feature, index) => (
@@ -221,6 +237,16 @@ export default function Dashboard() {
                 <h3 className="text-lg font-semibold text-card-foreground mb-2">{feature.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
               </div>
+            ) : feature.onClick ? (
+              <button onClick={feature.onClick} className="w-full text-left">
+                <div className="relative bg-card border border-border rounded-lg p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer group">
+                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm group-hover:shadow-md transition-shadow`}>
+                    <feature.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+                </div>
+              </button>
             ) : (
               <Link href={feature.href}>
                 <div className="relative bg-card border border-border rounded-lg p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer group">
@@ -258,6 +284,12 @@ export default function Dashboard() {
           </Link>
         </div>
       </div>
+
+      {/* Calorie Tracking Modal */}
+      <CalorieTrackingModal 
+        isOpen={isCalorieModalOpen}
+        onClose={() => setIsCalorieModalOpen(false)}
+      />
     </div>
   );
 }

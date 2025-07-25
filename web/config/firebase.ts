@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { env } from './env';
 
 // Firebase configuration using validated environment variables
@@ -31,7 +32,8 @@ if (typeof window !== 'undefined') {
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 const googleProvider = new GoogleAuthProvider();
 
-export { auth, db, googleProvider, analytics };
+export { auth, db, storage, googleProvider, analytics };
 export default app;
