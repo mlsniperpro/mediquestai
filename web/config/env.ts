@@ -20,7 +20,7 @@ interface EnvConfig {
 }
 
 const getEnvVar = (key: string, required: boolean = true): string => {
-  const value = process.env[key] || process.env[`NEXT_PUBLIC_${key}`];
+  const value = process.env[key];
   
   if (required && !value) {
     throw new Error(`Missing required environment variable: ${key}`);
@@ -29,24 +29,25 @@ const getEnvVar = (key: string, required: boolean = true): string => {
   return value || '';
 };
 
+// Use getter functions to access environment variables lazily
 export const env: EnvConfig = {
-  // Firebase (all required)
-  FIREBASE_API_KEY: getEnvVar('FIREBASE_API_KEY'),
-  FIREBASE_AUTH_DOMAIN: getEnvVar('FIREBASE_AUTH_DOMAIN'),
-  FIREBASE_DATABASE_URL: getEnvVar('FIREBASE_DATABASE_URL'),
-  FIREBASE_PROJECT_ID: getEnvVar('FIREBASE_PROJECT_ID'),
-  FIREBASE_STORAGE_BUCKET: getEnvVar('FIREBASE_STORAGE_BUCKET'),
-  FIREBASE_MESSAGING_SENDER_ID: getEnvVar('FIREBASE_MESSAGING_SENDER_ID'),
-  FIREBASE_APP_ID: getEnvVar('FIREBASE_APP_ID'),
-  FIREBASE_MEASUREMENT_ID: getEnvVar('FIREBASE_MEASUREMENT_ID'),
+  // Firebase (all required) - access process.env directly
+  get FIREBASE_API_KEY() { return process.env.NEXT_PUBLIC_FIREBASE_API_KEY || (() => { throw new Error('Missing required environment variable: NEXT_PUBLIC_FIREBASE_API_KEY'); })(); },
+  get FIREBASE_AUTH_DOMAIN() { return process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || (() => { throw new Error('Missing required environment variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'); })(); },
+  get FIREBASE_DATABASE_URL() { return process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL || (() => { throw new Error('Missing required environment variable: NEXT_PUBLIC_FIREBASE_DATABASE_URL'); })(); },
+  get FIREBASE_PROJECT_ID() { return process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || (() => { throw new Error('Missing required environment variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID'); })(); },
+  get FIREBASE_STORAGE_BUCKET() { return process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || (() => { throw new Error('Missing required environment variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'); })(); },
+  get FIREBASE_MESSAGING_SENDER_ID() { return process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || (() => { throw new Error('Missing required environment variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'); })(); },
+  get FIREBASE_APP_ID() { return process.env.NEXT_PUBLIC_FIREBASE_APP_ID || (() => { throw new Error('Missing required environment variable: NEXT_PUBLIC_FIREBASE_APP_ID'); })(); },
+  get FIREBASE_MEASUREMENT_ID() { return process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || (() => { throw new Error('Missing required environment variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID'); })(); },
   
   // ICP (optional)
-  DFX_NETWORK: getEnvVar('DFX_NETWORK', false),
-  INTERNET_IDENTITY_CANISTER_ID: getEnvVar('INTERNET_IDENTITY_CANISTER_ID', false),
+  get DFX_NETWORK() { return process.env.NEXT_PUBLIC_DFX_NETWORK || ''; },
+  get INTERNET_IDENTITY_CANISTER_ID() { return process.env.NEXT_PUBLIC_INTERNET_IDENTITY_CANISTER_ID || ''; },
   
   // App
-  NODE_ENV: getEnvVar('NODE_ENV'),
-  NEXT_PUBLIC_APP_URL: getEnvVar('NEXT_PUBLIC_APP_URL', false),
+  get NODE_ENV() { return process.env.NODE_ENV || 'development'; },
+  get NEXT_PUBLIC_APP_URL() { return process.env.NEXT_PUBLIC_APP_URL || ''; },
 };
 
 export const isDevelopment = env.NODE_ENV === 'development';
