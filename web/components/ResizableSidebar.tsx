@@ -252,39 +252,12 @@ export default function ResizableSidebar({ isOpen = true, onClose, onWidthChange
         </nav>
 
         {/* Footer */}
-        <div className={`${isCollapsed ? 'px-2' : 'px-4'} py-4 border-t border-border space-y-3`}>
-          {!isCollapsed && <UserDropdown />}
-          
-          {/* Theme Toggle Section */}
-          <div className={`${!isCollapsed ? 'pt-2 border-t border-border' : ''}`}>
-            {!isCollapsed && (
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-muted-foreground">Theme</span>
-              </div>
-            )}
-            <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-1'}`}>
-              {['light', 'dark', 'system'].map((themeOption) => {
-                const isActive = theme === themeOption;
-                
-                return (
-                  <button
-                    key={themeOption}
-                    onClick={() => setTheme(themeOption)}
-                    className={`p-1.5 rounded-md text-xs transition-colors ${
-                      isActive 
-                        ? 'bg-primary/10 text-primary' 
-                        : 'text-muted-foreground hover:text-foreground hover:bg-primary/5'
-                    } ${isCollapsed ? 'mb-1' : ''}`}
-                    title={`Switch to ${themeOption} theme`}
-                  >
-                    {themeOption === 'light' && '☀️'}
-                    {themeOption === 'dark' && '🌙'}
-                    {themeOption === 'system' && '💻'}
-                  </button>
-                );
-              })}
+        <div className={`${isCollapsed ? 'px-2' : 'px-4'} py-4 border-t border-border`}>
+          {!isCollapsed && (
+            <div className="pt-2">
+              <UserDropdown />
             </div>
-          </div>
+          )}
         </div>
 
         {/* Resize Handle - Desktop only */}
