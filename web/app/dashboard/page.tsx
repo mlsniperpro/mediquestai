@@ -61,8 +61,7 @@ export default function Dashboard() {
       description: 'Get 24/7 access to specialized AI doctors for instant health guidance and symptom analysis',
       icon: UserGroupIcon,
       href: '/dashboard/ai-doctor',
-      gradient: 'from-blue-400 to-indigo-600',
-      comingSoon: true
+      gradient: 'from-blue-400 to-indigo-600'
     },
     {
       title: 'Health Monitoring',
