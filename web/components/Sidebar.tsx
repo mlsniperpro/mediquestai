@@ -4,7 +4,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import UserDropdown from '@/components/ui/UserDropdown';
 import { 
   HomeIcon, 
@@ -69,13 +68,8 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const { userProfile } = useAuth();
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <>
@@ -93,31 +87,31 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out
         lg:relative lg:transform-none lg:z-auto
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        ${!mounted ? 'bg-white' : theme === 'dark' ? 'bg-gray-900' : 'bg-white'}
+        bg-background border-r border-border
       `}>
         {/* Logo/Brand */}
-        <div className="flex items-center justify-between h-16 px-4 bg-indigo-600">
+        <div className="flex items-center justify-between h-16 px-4 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800">
           <h1 className="text-xl font-bold text-white">MediQuestAI</h1>
           {/* Mobile close button */}
           <button
             onClick={onClose}
-            className="lg:hidden text-white hover:text-gray-200"
+            className="lg:hidden text-white hover:text-white/80 transition-colors"
           >
             <XMarkIcon className="h-6 w-6" />
           </button>
         </div>
 
         {/* User Info */}
-        <div className="px-4 py-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="px-4 py-4 border-b border-border">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center">
-            <UserIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+            <UserIcon className="w-6 h-6 text-primary" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+            <p className="text-sm font-medium text-foreground truncate">
               {userProfile?.role ? userProfile.role.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'User'}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+            <p className="text-xs text-muted-foreground truncate">
               {userProfile?.facilityName || 'Healthcare Professional'}
             </p>
           </div>
@@ -134,19 +128,19 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
               href={item.href}
               className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors duration-150 ease-in-out ${
                 isActive
-                  ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-900 dark:text-indigo-100 border-r-2 border-indigo-600'
-                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
+                  ? 'bg-primary/10 text-primary border-r-2 border-primary'
+                  : 'text-muted-foreground hover:bg-primary/5 hover:text-foreground'
               }`}
             >
               <item.icon
                 className={`mr-3 h-5 w-5 flex-shrink-0 ${
-                  isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400'
+                  isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'
                 }`}
               />
               <div className="flex-1">
                 <div className="text-sm font-medium">{item.name}</div>
                 {item.description && (
-                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 hidden sm:block">{item.description}</div>
+                  <div className="text-xs text-muted-foreground mt-0.5 hidden sm:block">{item.description}</div>
                 )}
               </div>
             </Link>
@@ -154,9 +148,38 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         })}
       </nav>
 
-        {/* Footer - User Dropdown */}
-        <div className="px-4 py-4 border-t border-gray-200 dark:border-gray-700">
+        {/* Footer - User Dropdown and Theme Toggle */}
+        <div className="px-4 py-4 border-t border-border space-y-3">
           <UserDropdown />
+          
+          {/* Theme Toggle Section */}
+          <div className="pt-2 border-t border-border">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-muted-foreground">Theme</span>
+              <div className="flex items-center space-x-1">
+                {['light', 'dark', 'system'].map((themeOption) => {
+                  const isActive = theme === themeOption;
+                  
+                  return (
+                    <button
+                      key={themeOption}
+                      onClick={() => setTheme(themeOption)}
+                      className={`p-1.5 rounded-md text-xs transition-colors ${
+                        isActive 
+                          ? 'bg-primary/10 text-primary' 
+                          : 'text-muted-foreground hover:text-foreground hover:bg-primary/5'
+                      }`}
+                      title={`Switch to ${themeOption} theme`}
+                    >
+                      {themeOption === 'light' && '☀️'}
+                      {themeOption === 'dark' && '🌙'}
+                      {themeOption === 'system' && '💻'}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

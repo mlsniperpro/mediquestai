@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import AuthGuard from '@/components/AuthGuard';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Alert } from '@/components/ui/Alert';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -30,60 +33,73 @@ export default function ForgotPassword() {
 
   return (
     <AuthGuard requireAuth={false}>
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
-          <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Reset your password
-            </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
-              Enter your email address and we&apos;ll send you a link to reset your password.
-            </p>
-          </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                {error}
-              </div>
-            )}
-            {message && (
-              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-                {message}
-              </div>
-            )}
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+      <div className="h-full mt-12 md:mt-24 text-center w-full flex items-center flex-col justify-center min-h-screen bg-background">
+        <div className="mb-6">
+          <Link href="/" className="w-fit">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <svg className="h-5 w-5 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1721 9z" />
+              </svg>
             </div>
+          </Link>
+        </div>
+        
+        <div className="lg:animate-fade-in-up">
+          <section className="flex min-w-96 flex-col items-center justify-center">
+            <span className="text-xl text-center lg:text-2xl text-foreground">Reset your password</span>
+            <span className="text-primary/50 text-center mt-2 mb-5">Enter your email address and we&apos;ll send you a link to reset your password.</span>
+            
+            <form className="flex w-full flex-col" onSubmit={handleSubmit}>
+              {error && (
+                <Alert variant="error" className="mb-6">
+                  {error}
+                </Alert>
+              )}
+              {message && (
+                <Alert variant="success" className="mb-6">
+                  {message}
+                </Alert>
+              )}
 
-            <div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-              >
-                {loading ? 'Sending...' : 'Send reset email'}
-              </button>
-            </div>
+              <div className="space-y-2">
+                <div className="relative w-full">
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="mt-1 mb-4"
+                  />
+                </div>
+              </div>
 
-            <div className="text-center">
-              <Link href="/auth/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <div className="flex mt-3 w-full justify-center">
+                <Button
+                  type="submit"
+                  fullWidth
+                  loading={loading}
+                  size="lg"
+                  className="mb-4"
+                  disabled={loading}
+                >
+                  {loading ? 'Sending...' : 'Send reset email'}
+                </Button>
+              </div>
+            </form>
+
+            <div className="text-primary/50 mb-6 text-md">
+              <Link className="mr-1 text-primary/80 underline hover:text-primary inline-flex items-center" href="/auth/signin">
+                <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
                 Back to sign in
               </Link>
             </div>
-          </form>
+          </section>
         </div>
       </div>
     </AuthGuard>
