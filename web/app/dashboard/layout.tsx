@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import AuthGuard from '@/components/AuthGuard';
-import ResizableSidebar from '@/components/ResizableSidebar';
+import Sidebar from '@/components/Sidebar';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 
 export default function DashboardLayout({
@@ -39,7 +39,7 @@ export default function DashboardLayout({
           className="lg:flex-shrink-0 hidden lg:block" 
           style={{ width: `${sidebarWidth}px` }}
         >
-          <ResizableSidebar 
+          <Sidebar 
             isOpen={true} 
             onClose={() => setSidebarOpen(false)}
             onWidthChange={handleSidebarWidthChange}
@@ -48,7 +48,7 @@ export default function DashboardLayout({
         
         {/* Mobile Sidebar */}
         <div className="lg:hidden">
-          <ResizableSidebar 
+          <Sidebar 
             isOpen={sidebarOpen} 
             onClose={() => setSidebarOpen(false)}
             onWidthChange={handleSidebarWidthChange}
