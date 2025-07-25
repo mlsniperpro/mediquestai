@@ -130,3 +130,6 @@ dfx.json.backup
 # Additional Rust toolchain files
 rust-toolchain
 rust-toolchain.toml
+
+# Canister backend directory (managed as external repository)
+cannister-backend/
