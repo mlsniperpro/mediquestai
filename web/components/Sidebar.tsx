@@ -101,11 +101,11 @@ export default function Sidebar({ isOpen = true, onClose, onWidthChange }: Sideb
       <div 
         ref={sidebarRef}
         className={`
-          shadow-lg h-screen flex flex-col relative
+          h-screen flex flex-col
           fixed inset-y-0 left-0 z-50 transform transition-all duration-300 ease-in-out
-          lg:relative lg:transform-none lg:z-auto
+          lg:relative lg:transform-none lg:z-auto lg:shadow-none
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          bg-background border-r border-border
+          bg-background border-r border-border shadow-lg lg:shadow-none
         `}
         style={{ width: `${currentWidth}px` }}
       >

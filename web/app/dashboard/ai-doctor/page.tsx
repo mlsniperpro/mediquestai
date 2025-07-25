@@ -7,7 +7,6 @@ import {
   PhoneIcon,
   ChatBubbleLeftRightIcon,
   ClockIcon,
-  StarIcon,
   CheckCircleIcon,
   ArrowLeftIcon,
   HeartIcon,
@@ -241,27 +240,33 @@ export default function AIDoctorPage() {
 
   if (selectedDoctor) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Header */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
           <Button
             variant="outline"
             onClick={() => setSelectedDoctor(null)}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 w-fit touch-manipulation"
+            size="sm"
           >
             <ArrowLeftIcon className="w-4 h-4" />
-            Back to Doctors
+            <span className="hidden xs:inline">Back to Doctors</span>
+            <span className="xs:hidden">Back</span>
           </Button>
-          <div>
-            <h1 className="text-2xl font-bold text-card-foreground">Consultation with {selectedDoctor.name}</h1>
-            <p className="text-muted-foreground">Choose your preferred consultation method</p>
+          <div className="flex-1">
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-card-foreground leading-tight">
+              Consultation with {selectedDoctor.name}
+            </h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
+              Choose your preferred consultation method
+            </p>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-4 lg:gap-6">
           {/* Doctor Info */}
           <div className="lg:col-span-1">
-            <div className="bg-card border border-border rounded-lg p-6">
+            <div className="bg-card border border-border rounded-lg p-4 lg:p-6">
               <div className="text-center mb-6">
                 <div className="text-6xl mb-4">{selectedDoctor.avatar}</div>
                 <h2 className="text-xl font-bold text-card-foreground mb-2">{selectedDoctor.name}</h2>
@@ -307,29 +312,31 @@ export default function AIDoctorPage() {
           </div>
 
           {/* Consultation Options */}
-          <div className="lg:col-span-2">
-            <div className="bg-card border border-border rounded-lg p-6">
-              <h2 className="text-xl font-bold text-card-foreground mb-6">Choose Your Consultation Type</h2>
+          <div className="lg:col-span-2 order-1 lg:order-2">
+            <div className="bg-card border border-border rounded-lg p-4 sm:p-5 lg:p-6">
+              <h2 className="text-base sm:text-lg lg:text-xl font-bold text-card-foreground mb-4 lg:mb-6">
+                Choose Your Consultation Type
+              </h2>
               
               <div className="space-y-4">
                 {/* Video Call */}
                 {selectedDoctor.consultationTypes.includes('video') && (
-                  <div className="group bg-card border border-border rounded-lg p-6 hover:shadow-md hover:border-primary/20 transition-all duration-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-lg flex items-center justify-center">
-                          <VideoCameraIcon className="w-6 h-6 text-white" />
+                  <div className="group bg-card border border-border rounded-lg p-4 lg:p-6 hover:shadow-md hover:border-primary/20 transition-all duration-200">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="flex items-center gap-3 lg:gap-4">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <VideoCameraIcon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                         </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-card-foreground mb-1">Video Call</h3>
-                          <p className="text-muted-foreground mb-2">Face-to-face consultation with screen sharing</p>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-base lg:text-lg font-semibold text-card-foreground mb-1">Video Call</h3>
+                          <p className="text-sm text-muted-foreground mb-2">Face-to-face consultation with screen sharing</p>
+                          <div className="flex flex-wrap items-center gap-3 lg:gap-4 text-xs lg:text-sm text-muted-foreground">
                             <div className="flex items-center gap-1">
-                              <ClockIcon className="w-4 h-4" />
+                              <ClockIcon className="w-3 h-3 lg:w-4 lg:h-4" />
                               <span>15-30 min</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                              <CheckCircleIcon className="w-3 h-3 lg:w-4 lg:h-4 text-green-500" />
                               <span>HD Quality</span>
                             </div>
                           </div>
@@ -338,7 +345,7 @@ export default function AIDoctorPage() {
                       <Button
                         onClick={() => handleConsultation(selectedDoctor, 'video')}
                         disabled={selectedDoctor.availability !== 'available'}
-                        className="bg-blue-600 hover:bg-blue-700"
+                        className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto text-sm lg:text-base px-4 lg:px-6"
                       >
                         Start Video Call
                       </Button>
@@ -348,22 +355,22 @@ export default function AIDoctorPage() {
 
                 {/* Voice Call */}
                 {selectedDoctor.consultationTypes.includes('voice') && (
-                  <div className="group bg-card border border-border rounded-lg p-6 hover:shadow-md hover:border-primary/20 transition-all duration-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-600 rounded-lg flex items-center justify-center">
-                          <MicrophoneIcon className="w-6 h-6 text-white" />
+                  <div className="group bg-card border border-border rounded-lg p-4 lg:p-6 hover:shadow-md hover:border-primary/20 transition-all duration-200">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="flex items-center gap-3 lg:gap-4">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-green-400 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <MicrophoneIcon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                         </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-card-foreground mb-1">Voice Call</h3>
-                          <p className="text-muted-foreground mb-2">Audio-only consultation for privacy and convenience</p>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-base lg:text-lg font-semibold text-card-foreground mb-1">Voice Call</h3>
+                          <p className="text-sm text-muted-foreground mb-2">Audio-only consultation for privacy and convenience</p>
+                          <div className="flex flex-wrap items-center gap-3 lg:gap-4 text-xs lg:text-sm text-muted-foreground">
                             <div className="flex items-center gap-1">
-                              <ClockIcon className="w-4 h-4" />
+                              <ClockIcon className="w-3 h-3 lg:w-4 lg:h-4" />
                               <span>10-25 min</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                              <CheckCircleIcon className="w-3 h-3 lg:w-4 lg:h-4 text-green-500" />
                               <span>Crystal Clear</span>
                             </div>
                           </div>
@@ -372,7 +379,7 @@ export default function AIDoctorPage() {
                       <Button
                         onClick={() => handleConsultation(selectedDoctor, 'voice')}
                         disabled={selectedDoctor.availability !== 'available'}
-                        className="bg-green-600 hover:bg-green-700"
+                        className="bg-green-600 hover:bg-green-700 w-full sm:w-auto text-sm lg:text-base px-4 lg:px-6"
                       >
                         Start Voice Call
                       </Button>
@@ -382,22 +389,22 @@ export default function AIDoctorPage() {
 
                 {/* Phone Call */}
                 {selectedDoctor.consultationTypes.includes('phone') && (
-                  <div className="group bg-card border border-border rounded-lg p-6 hover:shadow-md hover:border-primary/20 transition-all duration-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-600 rounded-lg flex items-center justify-center">
-                          <PhoneIcon className="w-6 h-6 text-white" />
+                  <div className="group bg-card border border-border rounded-lg p-4 lg:p-6 hover:shadow-md hover:border-primary/20 transition-all duration-200">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="flex items-center gap-3 lg:gap-4">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-purple-400 to-pink-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <PhoneIcon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                         </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-card-foreground mb-1">Telephone Call</h3>
-                          <p className="text-muted-foreground mb-2">Traditional phone call to your number</p>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-base lg:text-lg font-semibold text-card-foreground mb-1">Telephone Call</h3>
+                          <p className="text-sm text-muted-foreground mb-2">Traditional phone call to your number</p>
+                          <div className="flex flex-wrap items-center gap-3 lg:gap-4 text-xs lg:text-sm text-muted-foreground">
                             <div className="flex items-center gap-1">
-                              <ClockIcon className="w-4 h-4" />
+                              <ClockIcon className="w-3 h-3 lg:w-4 lg:h-4" />
                               <span>10-20 min</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                              <CheckCircleIcon className="w-3 h-3 lg:w-4 lg:h-4 text-green-500" />
                               <span>Reliable</span>
                             </div>
                           </div>
@@ -406,7 +413,7 @@ export default function AIDoctorPage() {
                       <Button
                         onClick={() => handleConsultation(selectedDoctor, 'phone')}
                         disabled={selectedDoctor.availability !== 'available'}
-                        className="bg-purple-600 hover:bg-purple-700"
+                        className="bg-purple-600 hover:bg-purple-700 w-full sm:w-auto text-sm lg:text-base px-4 lg:px-6"
                       >
                         Request Call
                       </Button>
@@ -416,22 +423,22 @@ export default function AIDoctorPage() {
 
                 {/* Chat */}
                 {selectedDoctor.consultationTypes.includes('chat') && (
-                  <div className="group bg-card border border-border rounded-lg p-6 hover:shadow-md hover:border-primary/20 transition-all duration-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-600 rounded-lg flex items-center justify-center">
-                          <ChatBubbleLeftRightIcon className="w-6 h-6 text-white" />
+                  <div className="group bg-card border border-border rounded-lg p-4 lg:p-6 hover:shadow-md hover:border-primary/20 transition-all duration-200">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="flex items-center gap-3 lg:gap-4">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-orange-400 to-red-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <ChatBubbleLeftRightIcon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                         </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-card-foreground mb-1">Chat Consultation</h3>
-                          <p className="text-muted-foreground mb-2">Text-based consultation with instant AI responses</p>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-base lg:text-lg font-semibold text-card-foreground mb-1">Chat Consultation</h3>
+                          <p className="text-sm text-muted-foreground mb-2">Text-based consultation with instant AI responses</p>
+                          <div className="flex flex-wrap items-center gap-3 lg:gap-4 text-xs lg:text-sm text-muted-foreground">
                             <div className="flex items-center gap-1">
-                              <ClockIcon className="w-4 h-4" />
+                              <ClockIcon className="w-3 h-3 lg:w-4 lg:h-4" />
                               <span>5-15 min</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <CheckCircleIcon className="w-4 h-4 text-green-500" />
+                              <CheckCircleIcon className="w-3 h-3 lg:w-4 lg:h-4 text-green-500" />
                               <span>Instant Response</span>
                             </div>
                           </div>
@@ -440,7 +447,7 @@ export default function AIDoctorPage() {
                       <Button
                         onClick={() => handleConsultation(selectedDoctor, 'chat')}
                         disabled={selectedDoctor.availability !== 'available'}
-                        className="bg-orange-600 hover:bg-orange-700"
+                        className="bg-orange-600 hover:bg-orange-700 w-full sm:w-auto text-sm lg:text-base px-4 lg:px-6"
                       >
                         Start Chat
                       </Button>
@@ -467,20 +474,22 @@ export default function AIDoctorPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
-        <h1 className="text-2xl font-bold text-card-foreground mb-2">AI Doctor Consultation</h1>
-        <p className="text-muted-foreground">
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 lg:p-6">
+        <h1 className="text-xl lg:text-2xl font-bold text-card-foreground mb-2">AI Doctor Consultation</h1>
+        <p className="text-sm lg:text-base text-muted-foreground">
           Get instant access to specialized AI doctors available 24/7 for your health concerns
         </p>
       </div>
 
       {/* Specialty Filter */}
-      <div className="bg-card border border-border rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-card-foreground mb-4">Choose a Specialty</h2>
-        <div className="flex flex-wrap gap-3">
+      <div className="bg-card border border-border rounded-lg p-4 sm:p-5 lg:p-6">
+        <h2 className="text-sm sm:text-base lg:text-lg font-semibold text-card-foreground mb-3 sm:mb-4">
+          Choose a Specialty
+        </h2>
+        <div className="flex flex-wrap gap-2 sm:gap-2.5 lg:gap-3">
           <button
             onClick={() => setSelectedSpecialty(null)}
-            className={`px-4 py-2 rounded-lg border transition-colors ${
+            className={`px-3 lg:px-4 py-2 rounded-lg border transition-colors text-sm lg:text-base ${
               selectedSpecialty === null
                 ? 'bg-primary text-primary-foreground border-primary'
                 : 'bg-card text-card-foreground border-border hover:bg-accent'
@@ -494,16 +503,16 @@ export default function AIDoctorPage() {
               <button
                 key={specialty.name}
                 onClick={() => setSelectedSpecialty(specialty.name)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+                className={`flex items-center gap-1 lg:gap-2 px-3 lg:px-4 py-2 rounded-lg border transition-colors text-sm lg:text-base ${
                   selectedSpecialty === specialty.name
                     ? 'bg-primary text-primary-foreground border-primary'
                     : 'bg-card text-card-foreground border-border hover:bg-accent'
                 }`}
               >
-                <div className={`w-4 h-4 rounded bg-gradient-to-br ${specialty.gradient} flex items-center justify-center`}>
-                  <IconComponent className="w-3 h-3 text-white" />
+                <div className={`w-3 h-3 lg:w-4 lg:h-4 rounded bg-gradient-to-br ${specialty.gradient} flex items-center justify-center flex-shrink-0`}>
+                  <IconComponent className="w-2 h-2 lg:w-3 lg:h-3 text-white" />
                 </div>
-                {specialty.name}
+                <span className="truncate">{specialty.name}</span>
               </button>
             );
           })}
@@ -511,17 +520,17 @@ export default function AIDoctorPage() {
       </div>
 
       {/* Doctors Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
         {filteredDoctors.map((doctor) => (
           <div
             key={doctor.id}
-            className="group bg-card border border-border rounded-lg p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer"
+            className="group bg-card border border-border rounded-lg p-4 lg:p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer"
             onClick={() => setSelectedDoctor(doctor)}
           >
             <div className="text-center mb-4">
-              <div className="text-3xl mb-3">{doctor.avatar}</div>
-              <h3 className="text-lg font-semibold text-card-foreground mb-1">{doctor.name}</h3>
-              <p className="text-blue-600 dark:text-blue-400 font-medium mb-2">{doctor.specialty}</p>
+              <div className="text-2xl lg:text-3xl mb-3">{doctor.avatar}</div>
+              <h3 className="text-base lg:text-lg font-semibold text-card-foreground mb-1 line-clamp-1">{doctor.name}</h3>
+              <p className="text-sm lg:text-base text-blue-600 dark:text-blue-400 font-medium mb-2 line-clamp-1">{doctor.specialty}</p>
               <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                 doctor.availability === 'available' 
                   ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
@@ -538,55 +547,57 @@ export default function AIDoctorPage() {
               </div>
             </div>
 
-            <p className="text-sm text-muted-foreground mb-4 text-center line-clamp-2">{doctor.description}</p>
+            <p className="text-xs lg:text-sm text-muted-foreground mb-3 lg:mb-4 text-center line-clamp-2">{doctor.description}</p>
 
-            <div className="flex justify-center gap-2 mb-4">
+            <div className="flex justify-center gap-1 lg:gap-2 mb-3 lg:mb-4">
               {doctor.consultationTypes.map((type) => (
                 <div
                   key={type}
-                  className="flex items-center justify-center w-8 h-8 bg-accent rounded-full"
+                  className="flex items-center justify-center w-6 h-6 lg:w-8 lg:h-8 bg-accent rounded-full"
                   title={`${type} consultation available`}
                 >
-                  {type === 'video' && <VideoCameraIcon className="w-4 h-4 text-blue-600" />}
-                  {type === 'voice' && <MicrophoneIcon className="w-4 h-4 text-green-600" />}
-                  {type === 'phone' && <PhoneIcon className="w-4 h-4 text-purple-600" />}
-                  {type === 'chat' && <ChatBubbleLeftRightIcon className="w-4 h-4 text-orange-600" />}
+                  {type === 'video' && <VideoCameraIcon className="w-3 h-3 lg:w-4 lg:h-4 text-blue-600" />}
+                  {type === 'voice' && <MicrophoneIcon className="w-3 h-3 lg:w-4 lg:h-4 text-green-600" />}
+                  {type === 'phone' && <PhoneIcon className="w-3 h-3 lg:w-4 lg:h-4 text-purple-600" />}
+                  {type === 'chat' && <ChatBubbleLeftRightIcon className="w-3 h-3 lg:w-4 lg:h-4 text-orange-600" />}
                 </div>
               ))}
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">{doctor.experience}</span>
-              <ChevronRightIcon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              <span className="text-xs lg:text-sm text-muted-foreground">{doctor.experience}</span>
+              <ChevronRightIcon className="w-3 h-3 lg:w-4 lg:h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </div>
           </div>
         ))}
       </div>
 
       {/* Features Section */}
-      <div className="bg-card border border-border rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-card-foreground mb-4 text-center">Why Choose Our AI Doctors?</h2>
-        <div className="grid md:grid-cols-3 gap-6">
+      <div className="bg-card border border-border rounded-lg p-4 sm:p-5 lg:p-6">
+        <h2 className="text-sm sm:text-base lg:text-lg font-semibold text-card-foreground mb-4 sm:mb-5 lg:mb-6 text-center">
+          Why Choose Our AI Doctors?
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           <div className="text-center">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-lg flex items-center justify-center mx-auto mb-3">
-              <ClockIcon className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-lg flex items-center justify-center mx-auto mb-3 lg:mb-4">
+              <ClockIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h3 className="font-semibold text-card-foreground mb-2">24/7 Availability</h3>
-            <p className="text-sm text-muted-foreground">Get medical advice anytime, anywhere</p>
+            <h3 className="text-sm sm:text-base font-semibold text-card-foreground mb-2 leading-tight">24/7 Availability</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">Get medical advice anytime, anywhere</p>
           </div>
           <div className="text-center">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-600 rounded-lg flex items-center justify-center mx-auto mb-3">
-              <CheckCircleIcon className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 bg-gradient-to-br from-green-400 to-emerald-600 rounded-lg flex items-center justify-center mx-auto mb-3 lg:mb-4">
+              <CheckCircleIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h3 className="font-semibold text-card-foreground mb-2">Instant Response</h3>
-            <p className="text-sm text-muted-foreground">No waiting rooms or long appointments</p>
+            <h3 className="text-sm sm:text-base font-semibold text-card-foreground mb-2 leading-tight">Instant Response</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">No waiting rooms or long appointments</p>
           </div>
           <div className="text-center">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-600 rounded-lg flex items-center justify-center mx-auto mb-3">
-              <VideoCameraIcon className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 bg-gradient-to-br from-purple-400 to-pink-600 rounded-lg flex items-center justify-center mx-auto mb-3 lg:mb-4">
+              <VideoCameraIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 lg:w-6 lg:h-6 text-white" />
             </div>
-            <h3 className="font-semibold text-card-foreground mb-2">Multiple Options</h3>
-            <p className="text-sm text-muted-foreground">Video, voice, or phone consultations</p>
+            <h3 className="text-sm sm:text-base font-semibold text-card-foreground mb-2 leading-tight">Multiple Options</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">Video, voice, phone, or chat consultations</p>
           </div>
         </div>
       </div>

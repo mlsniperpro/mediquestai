@@ -30,42 +30,42 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="pt-20 pb-16 text-center lg:pt-32">
-          <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
+        <div className="pt-16 sm:pt-20 pb-12 sm:pb-16 text-center lg:pt-32">
+          <h1 className="mx-auto max-w-4xl font-display text-3xl sm:text-5xl font-medium tracking-tight text-slate-900 lg:text-7xl">
             Welcome to{' '}
             <span className="relative whitespace-nowrap text-indigo-600">
               <span className="relative">MediQuestAI</span>
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
+          <p className="mx-auto mt-4 sm:mt-6 max-w-2xl text-base sm:text-lg tracking-tight text-slate-700 px-4">
             A secure authentication system powered by Firebase. Sign in to access your personalized dashboard
             and explore our features.
           </p>
-          <div className="mt-10 flex justify-center gap-x-6">
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row justify-center gap-4 sm:gap-x-6 px-4">
             <Link
               href="/auth/signin"
-              className="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-indigo-600 text-white hover:bg-indigo-500 active:bg-indigo-800 focus-visible:outline-indigo-600"
+              className="group inline-flex items-center justify-center rounded-full py-3 px-6 text-sm sm:text-base font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-indigo-600 text-white hover:bg-indigo-500 active:bg-indigo-800 focus-visible:outline-indigo-600"
             >
               Sign In
             </Link>
             <Link
               href="/auth/signup"
-              className="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-indigo-600 focus-visible:ring-slate-300"
+              className="group inline-flex ring-1 items-center justify-center rounded-full py-3 px-6 text-sm sm:text-base focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-indigo-600 focus-visible:ring-slate-300"
             >
               Create Account
             </Link>
           </div>
         </div>
 
-        <div className="mx-auto max-w-5xl">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg ring-1 ring-slate-200">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500">
-                <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="relative overflow-hidden rounded-2xl bg-white p-6 sm:p-8 shadow-lg ring-1 ring-slate-200">
+              <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-indigo-500">
+                <svg className="h-5 w-5 sm:h-6 sm:w-6 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                 </svg>
               </div>
-              <h3 className="mt-6 text-lg font-semibold text-slate-900">Secure Authentication</h3>
+              <h3 className="mt-4 sm:mt-6 text-base sm:text-lg font-semibold text-slate-900">Secure Authentication</h3>
               <p className="mt-2 text-sm text-slate-600">
                 Firebase-powered authentication with email/password and Google OAuth support.
               </p>

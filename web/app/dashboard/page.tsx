@@ -206,54 +206,54 @@ export default function Dashboard() {
   const features = getFeatures();
 
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-full space-y-4 sm:space-y-6">
       {/* Welcome Section */}
       {currentRoleConfig && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 sm:p-6">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             {currentRoleConfig.welcomeTitle}
           </h1>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
             {currentRoleConfig.welcomeDescription}
           </p>
         </div>
       )}
 
       {/* Feature Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {features.map((feature, index) => (
-          <div key={index} className="group relative">
+          <div key={index} className="group relative w-full">
             {feature.comingSoon ? (
-              <div className="relative bg-card border border-border rounded-lg p-5 hover:shadow-md transition-all duration-200 opacity-80">
+              <div className="relative w-full bg-card border border-border rounded-lg p-4 sm:p-5 hover:shadow-md transition-all duration-200 opacity-80">
                 <div className="absolute top-3 right-3">
                   <span className="bg-amber-50 text-amber-700 text-xs font-medium px-2 py-1 rounded-md border border-amber-200">
                     Soon
                   </span>
                 </div>
-                <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm`}>
-                  <feature.icon className="w-5 h-5 text-white" />
+                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm`}>
+                  <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-card-foreground mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+                <h3 className="text-base sm:text-lg font-semibold text-card-foreground mb-2 break-words">{feature.title}</h3>
+                <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed break-words">{feature.description}</p>
               </div>
             ) : feature.onClick ? (
               <button onClick={feature.onClick} className="w-full text-left">
-                <div className="relative bg-card border border-border rounded-lg p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer group">
-                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm group-hover:shadow-md transition-shadow`}>
-                    <feature.icon className="w-5 h-5 text-white" />
+                <div className="relative w-full bg-card border border-border rounded-lg p-4 sm:p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer group">
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm group-hover:shadow-md transition-shadow`}>
+                    <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+                  <h3 className="text-base sm:text-lg font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors break-words">{feature.title}</h3>
+                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed break-words">{feature.description}</p>
                 </div>
               </button>
             ) : (
-              <Link href={feature.href}>
-                <div className="relative bg-card border border-border rounded-lg p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer group">
-                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm group-hover:shadow-md transition-shadow`}>
-                    <feature.icon className="w-5 h-5 text-white" />
+              <Link href={feature.href} className="block w-full">
+                <div className="relative w-full bg-card border border-border rounded-lg p-4 sm:p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer group">
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm group-hover:shadow-md transition-shadow`}>
+                    <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+                  <h3 className="text-base sm:text-lg font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors break-words">{feature.title}</h3>
+                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed break-words">{feature.description}</p>
                 </div>
               </Link>
             )}
@@ -262,9 +262,9 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Access Section */}
-      <div className="bg-card border border-border rounded-lg p-4">
-        <h2 className="text-lg font-semibold text-card-foreground mb-3">Quick Access</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+      <div className="w-full bg-card border border-border rounded-lg p-4">
+        <h2 className="text-base sm:text-lg font-semibold text-card-foreground mb-3">Quick Access</h2>
+        <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
           <Link href="/dashboard/settings" className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent transition-colors">
             <CogIcon className="w-4 h-4 text-muted-foreground" />
             <span className="text-sm font-medium text-card-foreground">Settings</span>

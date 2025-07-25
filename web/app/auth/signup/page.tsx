@@ -75,7 +75,7 @@ export default function SignUp() {
 
   return (
     <AuthGuard requireAuth={false}>
-      <div className="h-full mt-12 md:mt-24 text-center w-full flex items-center flex-col justify-center min-h-screen bg-background">
+      <div className="h-full mt-8 sm:mt-12 md:mt-24 text-center w-full flex items-center flex-col justify-center min-h-screen bg-background px-4 sm:px-6">
         <div className="mb-6">
           <Link href="/" className="w-fit">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -86,9 +86,9 @@ export default function SignUp() {
           </Link>
         </div>
         
-        <div className="lg:animate-fade-in-up">
-          <section className="flex min-w-96 flex-col items-center justify-center">
-            <span className="text-xl text-center lg:text-2xl text-foreground">Create your account</span>
+        <div className="lg:animate-fade-in-up w-full max-w-md">
+          <section className="flex w-full flex-col items-center justify-center">
+            <span className="text-lg sm:text-xl text-center lg:text-2xl text-foreground">Create your account</span>
             <span className="text-primary/50 text-center mt-2 mb-5">Join us today and get started.</span>
             
             <form className="flex w-full flex-col" onSubmit={handleSubmit}>

@@ -71,21 +71,21 @@ export default function SignIn() {
 
   return (
     <AuthGuard requireAuth={false}>
-      <div className="h-full mt-12 md:mt-24 text-center w-full flex items-center flex-col justify-center min-h-screen bg-background">
-        <div className="mb-6">
+      <div className="h-full mt-8 sm:mt-12 md:mt-24 text-center w-full flex items-center flex-col justify-center min-h-screen bg-background px-4 sm:px-6">
+        <div className="mb-4 sm:mb-6">
           <Link href="/" className="w-fit">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <svg className="h-5 w-5 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg flex items-center justify-center">
+              <svg className="h-5 w-5 sm:h-6 sm:w-6 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
           </Link>
         </div>
         
-        <div className="lg:animate-fade-in-up">
-          <section className="flex min-w-96 flex-col items-center justify-center">
-            <span className="text-xl text-center lg:text-2xl text-foreground">Welcome back</span>
-            <span className="text-primary/50 text-center mt-2 mb-5">Let&apos;s continue your learning journey.</span>
+        <div className="lg:animate-fade-in-up w-full max-w-md">
+          <section className="flex w-full flex-col items-center justify-center">
+            <span className="text-lg sm:text-xl text-center lg:text-2xl text-foreground">Welcome back</span>
+            <span className="text-sm sm:text-base text-primary/50 text-center mt-2 mb-4 sm:mb-5">Let&apos;s continue your learning journey.</span>
             
             <form className="flex w-full flex-col" onSubmit={handleSubmit}>
               {error && (
