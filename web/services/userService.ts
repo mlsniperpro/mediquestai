@@ -13,13 +13,19 @@ export const createUserProfile = async (
   const userProfile: Partial<UserProfile> = {
     uid,
     email,
-    displayName,
     authenticationComplete: false,
     authProvider,
-    icpPrincipal,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
+
+  // Only add optional fields if they have values (not undefined)
+  if (displayName !== undefined) {
+    userProfile.displayName = displayName;
+  }
+  if (icpPrincipal !== undefined) {
+    userProfile.icpPrincipal = icpPrincipal;
+  }
   
   await setDoc(userRef, userProfile);
 };
@@ -36,24 +42,53 @@ export const getUserProfile = async (uid: string): Promise<UserProfile | null> =
 
 export const updateUserRole = async (uid: string, roleData: RoleSelectionData): Promise<void> => {
   const userRef = doc(db, 'users', uid);
+  
+  // First check if the document exists
+  const userSnap = await getDoc(userRef);
+  
   const updateData: Partial<UserProfile> = {
     role: roleData.role,
     authenticationComplete: true,
     updatedAt: new Date(),
   };
 
-  // Add role-specific fields
-  if (roleData.facilityName) {
+  // Add role-specific fields only if they have values
+  if (roleData.facilityName !== undefined && roleData.facilityName.trim() !== '') {
     updateData.facilityName = roleData.facilityName;
   }
-  if (roleData.licenseNumber) {
+  if (roleData.licenseNumber !== undefined && roleData.licenseNumber.trim() !== '') {
     updateData.licenseNumber = roleData.licenseNumber;
   }
-  if (roleData.specialization) {
+  if (roleData.specialization !== undefined && roleData.specialization.trim() !== '') {
     updateData.specialization = roleData.specialization;
   }
 
-  await updateDoc(userRef, updateData);
+  if (userSnap.exists()) {
+    // Document exists, update it
+    await updateDoc(userRef, updateData);
+  } else {
+    // Document doesn't exist, create it with setDoc
+    // This shouldn't normally happen, but it's a safety net
+    // We need to get the existing user data to avoid losing information
+    const existingData = userSnap.exists() ? userSnap.data() : {};
+    const fullUserData: Partial<UserProfile> = {
+      uid,
+      authenticationComplete: false,
+      authProvider: 'firebase', // Default fallback
+      createdAt: new Date(),
+      ...existingData, // Preserve any existing data
+      ...updateData, // Apply the updates
+    };
+    
+    // Remove any undefined values before setting
+    Object.keys(fullUserData).forEach(key => {
+      if (fullUserData[key as keyof UserProfile] === undefined) {
+        delete fullUserData[key as keyof UserProfile];
+      }
+    });
+    
+    await setDoc(userRef, fullUserData);
+  }
 };
 
 export const checkUserExists = async (email: string): Promise<boolean> => {

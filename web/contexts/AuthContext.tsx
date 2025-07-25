@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       if (user) {
         try {
-          const profile = await getUserProfile(user.uid);
+          let profile = await getUserProfile(user.uid);
           if (profile) {
             setUserProfile(profile);
             setAuthProvider(profile.authProvider);
@@ -67,11 +67,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             // User exists in Firebase Auth but not in Firestore - create profile
             const provider = user.providerData[0]?.providerId === 'google.com' ? 'google' : 'firebase';
             await createUserProfile(user.uid, user.email!, user.displayName || undefined, provider);
+            
+            // Fetch the newly created profile
+            profile = await getUserProfile(user.uid);
+            if (profile) {
+              setUserProfile(profile);
+            }
             setAuthProvider(provider);
             setNeedsRoleSelection(true);
           }
         } catch (error) {
-          console.error('Error fetching user profile:', error);
+          console.error('Error fetching/creating user profile:', error);
+          // Even if profile creation fails, we still need to set the auth provider
+          const provider = user.providerData[0]?.providerId === 'google.com' ? 'google' : 'firebase';
+          setAuthProvider(provider);
           setNeedsRoleSelection(true);
         }
       } else {
@@ -180,12 +189,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const completeRoleSelection = async (roleData: RoleSelectionData) => {
     if (!user) throw new Error('No user logged in');
     
-    await updateUserRole(user.uid, roleData);
-    
-    // Refresh user profile
-    const updatedProfile = await getUserProfile(user.uid);
-    setUserProfile(updatedProfile);
-    setNeedsRoleSelection(false);
+    try {
+      console.log('Completing role selection for user:', user.uid, 'with data:', roleData);
+      await updateUserRole(user.uid, roleData);
+      
+      // Refresh user profile
+      const updatedProfile = await getUserProfile(user.uid);
+      if (updatedProfile) {
+        setUserProfile(updatedProfile);
+        setNeedsRoleSelection(false);
+        console.log('Role selection completed successfully');
+      } else {
+        console.error('Failed to fetch updated user profile after role selection');
+        throw new Error('Failed to update user profile');
+      }
+    } catch (error) {
+      console.error('Error completing role selection:', error);
+      throw error;
+    }
   };
 
   const checkUserExists = async (email: string): Promise<boolean> => {
