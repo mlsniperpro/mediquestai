@@ -3,12 +3,12 @@
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import UserDropdown from '@/components/ui/UserDropdown';
 import { 
   HomeIcon, 
   UserIcon, 
   DocumentTextIcon, 
   ChartBarIcon,
-  CogIcon,
   QuestionMarkCircleIcon,
   HeartIcon,
   XMarkIcon
@@ -51,12 +51,6 @@ const sidebarItems: SidebarItem[] = [
     href: '/dashboard/ai-assistant',
     icon: HeartIcon,
     description: 'Medical AI assistance'
-  },
-  {
-    name: 'Settings',
-    href: '/dashboard/settings',
-    icon: CogIcon,
-    description: 'Account and preferences'
   },
   {
     name: 'Help & Support',
@@ -151,11 +145,9 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         })}
       </nav>
 
-        {/* Footer */}
+        {/* Footer - User Dropdown */}
         <div className="px-4 py-4 border-t border-gray-200">
-          <div className="text-xs text-gray-500 text-center">
-            © 2024 MediQuestAI
-          </div>
+          <UserDropdown />
         </div>
       </div>
     </>

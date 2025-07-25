@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/navigation';
 import AuthGuard from '@/components/AuthGuard';
 import Sidebar from '@/components/Sidebar';
 import { Bars3Icon } from '@heroicons/react/24/outline';
@@ -12,18 +11,8 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, logout } = useAuth();
-  const router = useRouter();
+  const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      router.push('/');
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
 
   return (
     <AuthGuard requireAuth={true}>
@@ -59,12 +48,7 @@ export default function DashboardLayout({
                   <span className="text-gray-700 text-sm sm:hidden">
                     {user?.displayName?.split(' ')[0] || user?.email?.split('@')[0]}
                   </span>
-                  <button
-                    onClick={handleLogout}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 sm:px-4 rounded-md text-xs sm:text-sm font-medium transition-colors duration-150"
-                  >
-                    Sign out
-                  </button>
+                  {/* Note: Logout is now handled in the sidebar dropdown */}
                 </div>
               </div>
             </div>
