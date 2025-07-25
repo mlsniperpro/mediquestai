@@ -1,0 +1,21 @@
+{
+  "canisters": {
+    "cannister_backend": {
+      "candid": "src/cannister_backend/cannister_backend.did",
+      "package": "cannister_backend",
+      "type": "rust"
+    },
+    "internet_identity": {
+      "type": "pull",
+      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

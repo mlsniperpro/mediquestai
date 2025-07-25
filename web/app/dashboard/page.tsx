@@ -203,43 +203,32 @@ export default function Dashboard() {
   const features = getFeatures();
 
   return (
-    <div className="space-y-8">
-      {/* Welcome Section */}
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-card-foreground mb-4">
-          {currentRoleConfig?.welcomeTitle || 'Welcome to MediQuest AI'}
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          {currentRoleConfig?.welcomeDescription || 'Your comprehensive AI-powered healthcare platform'}
-        </p>
-      </div>
-
+    <div className="space-y-6">
       {/* Feature Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {features.map((feature, index) => (
           <div key={index} className="group relative">
             {feature.comingSoon ? (
-              <div className="relative bg-card border border-border rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 opacity-75">
-                <div className="absolute top-4 right-4">
-                  <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                    Coming Soon
+              <div className="relative bg-card border border-border rounded-lg p-5 hover:shadow-md transition-all duration-200 opacity-80">
+                <div className="absolute top-3 right-3">
+                  <span className="bg-amber-50 text-amber-700 text-xs font-medium px-2 py-1 rounded-md border border-amber-200">
+                    Soon
                   </span>
                 </div>
-                <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${feature.gradient} flex items-center justify-center mb-4`}>
-                  <feature.icon className="w-6 h-6 text-white" />
+                <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm`}>
+                  <feature.icon className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-card-foreground mb-2">{feature.title}</h3>
+                <h3 className="text-lg font-semibold text-card-foreground mb-2">{feature.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
               </div>
             ) : (
               <Link href={feature.href}>
-                <div className="relative bg-card border border-border rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${feature.gradient} flex items-center justify-center mb-4`}>
-                    <feature.icon className="w-6 h-6 text-white" />
+                <div className="relative bg-card border border-border rounded-lg p-5 hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer group">
+                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-3 shadow-sm group-hover:shadow-md transition-shadow`}>
+                    <feature.icon className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-card-foreground mb-2">{feature.title}</h3>
+                  <h3 className="text-lg font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-transparent group-hover:from-blue-50/10 group-hover:to-purple-50/10 rounded-xl transition-all duration-300"></div>
                 </div>
               </Link>
             )}
@@ -248,23 +237,23 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Access Section */}
-      <div className="bg-card border border-border rounded-xl p-6 shadow-lg">
-        <h2 className="text-2xl font-semibold text-card-foreground mb-4">Quick Access</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link href="/dashboard/settings" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors">
-            <CogIcon className="w-5 h-5 text-muted-foreground" />
+      <div className="bg-card border border-border rounded-lg p-4">
+        <h2 className="text-lg font-semibold text-card-foreground mb-3">Quick Access</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <Link href="/dashboard/settings" className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent transition-colors">
+            <CogIcon className="w-4 h-4 text-muted-foreground" />
             <span className="text-sm font-medium text-card-foreground">Settings</span>
           </Link>
-          <Link href="/dashboard/notifications" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors">
-            <DocumentTextIcon className="w-5 h-5 text-muted-foreground" />
+          <Link href="/dashboard/notifications" className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent transition-colors">
+            <DocumentTextIcon className="w-4 h-4 text-muted-foreground" />
             <span className="text-sm font-medium text-card-foreground">Notifications</span>
           </Link>
-          <Link href="/dashboard/help" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors">
-            <HeartIcon className="w-5 h-5 text-muted-foreground" />
-            <span className="text-sm font-medium text-card-foreground">Help & Support</span>
+          <Link href="/dashboard/help" className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent transition-colors">
+            <HeartIcon className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm font-medium text-card-foreground">Help</span>
           </Link>
-          <Link href="/dashboard/analytics" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors">
-            <ChartBarIcon className="w-5 h-5 text-muted-foreground" />
+          <Link href="/dashboard/analytics" className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent transition-colors">
+            <ChartBarIcon className="w-4 h-4 text-muted-foreground" />
             <span className="text-sm font-medium text-card-foreground">Analytics</span>
           </Link>
         </div>
