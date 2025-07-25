@@ -57,7 +57,7 @@ export default function UserDropdown() {
       {/* User Email Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors duration-150"
+        className="w-full flex items-center justify-between px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors duration-150"
       >
         <div className="flex items-center space-x-2 min-w-0">
           <UserCircleIcon className="h-4 w-4 text-gray-400 flex-shrink-0" />
@@ -72,13 +72,13 @@ export default function UserDropdown() {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+        <div className="absolute bottom-full left-0 right-0 mb-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50">
           <div className="py-1">
             {/* Settings */}
             <Link
               href="/dashboard/settings"
               onClick={() => setIsOpen(false)}
-              className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
+              className="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150"
             >
               <CogIcon className="h-4 w-4 mr-3 text-gray-400" />
               Settings
@@ -86,7 +86,7 @@ export default function UserDropdown() {
 
             {/* Theme Submenu */}
             <div className="border-t border-gray-100">
-              <div className="px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <div className="px-3 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                 Theme
               </div>
               {themeOptions.map((option) => {
@@ -95,13 +95,13 @@ export default function UserDropdown() {
                   <button
                     key={option.value}
                     onClick={() => {
-                      setTheme(option.value as 'light' | 'dark' | 'system');
+                      setTheme(option.value);
                       setIsOpen(false);
                     }}
                     className={`w-full flex items-center px-3 py-2 text-sm transition-colors duration-150 ${
                       theme === option.value
-                        ? 'bg-indigo-50 text-indigo-700'
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                   >
                     <Icon className="h-4 w-4 mr-3 text-gray-400" />

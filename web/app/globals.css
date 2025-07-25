@@ -32,6 +32,47 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Dark mode component styles */
+.dark .bg-white {
+  background-color: #1f2937;
+}
+
+.dark .bg-gray-50 {
+  background-color: #111827;
+}
+
+.dark .text-gray-900 {
+  color: #f9fafb;
+}
+
+.dark .text-gray-700 {
+  color: #d1d5db;
+}
+
+.dark .text-gray-600 {
+  color: #9ca3af;
+}
+
+.dark .text-gray-500 {
+  color: #6b7280;
+}
+
+.dark .border-gray-200 {
+  border-color: #374151;
+}
+
+.dark .border-gray-100 {
+  border-color: #4b5563;
+}
+
+.dark .hover\:bg-gray-50:hover {
+  background-color: #374151;
+}
+
+.dark .hover\:bg-gray-100:hover {
+  background-color: #4b5563;
+}
+
 /* Mobile responsiveness improvements */
 /* Ensure proper mobile viewport handling */
 html {

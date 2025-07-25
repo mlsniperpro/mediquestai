@@ -1,84 +1,33 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
-
-type Theme = 'light' | 'dark' | 'system';
-
-interface ThemeContextType {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-  resolvedTheme: 'light' | 'dark';
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { useTheme as useNextTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('system');
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Get theme from localStorage on mount
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
+    setMounted(true);
   }, []);
 
-  useEffect(() => {
-    // Update localStorage when theme changes
-    localStorage.setItem('theme', theme);
-
-    // Resolve the actual theme
-    let resolved: 'light' | 'dark';
-    if (theme === 'system') {
-      resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    } else {
-      resolved = theme;
-    }
-
-    setResolvedTheme(resolved);
-
-    // Apply theme to document
-    const root = document.documentElement;
-    if (resolved === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-  }, [theme]);
-
-  useEffect(() => {
-    // Listen for system theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = () => {
-      if (theme === 'system') {
-        const resolved = mediaQuery.matches ? 'dark' : 'light';
-        setResolvedTheme(resolved);
-        
-        const root = document.documentElement;
-        if (resolved === 'dark') {
-          root.classList.add('dark');
-        } else {
-          root.classList.remove('dark');
-        }
-      }
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [theme]);
+  if (!mounted) {
+    // Return children without theme provider during SSR to prevent hydration mismatch
+    return <>{children}</>;
+  }
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, resolvedTheme }}>
+    <NextThemesProvider 
+      attribute="class" 
+      defaultTheme="system" 
+      enableSystem
+      disableTransitionOnChange={false}
+    >
       {children}
-    </ThemeContext.Provider>
+    </NextThemesProvider>
   );
 }
 
 export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
+  return useNextTheme();
 }

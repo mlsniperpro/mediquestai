@@ -1,8 +1,10 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import UserDropdown from '@/components/ui/UserDropdown';
 import { 
   HomeIcon, 
@@ -67,7 +69,13 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const { userProfile } = useAuth();
+  const { theme } = useTheme();
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <>
@@ -81,10 +89,11 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
       
       {/* Sidebar */}
       <div className={`
-        w-64 bg-white shadow-lg h-screen flex flex-col
+        w-64 shadow-lg h-screen flex flex-col
         fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out
         lg:relative lg:transform-none lg:z-auto
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        ${!mounted ? 'bg-white' : theme === 'dark' ? 'bg-gray-900' : 'bg-white'}
       `}>
         {/* Logo/Brand */}
         <div className="flex items-center justify-between h-16 px-4 bg-indigo-600">
@@ -99,16 +108,16 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         </div>
 
         {/* User Info */}
-        <div className="px-4 py-4 border-b border-gray-200">
+        <div className="px-4 py-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
-            <UserIcon className="w-6 h-6 text-indigo-600" />
+          <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center">
+            <UserIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">
+            <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
               {userProfile?.role ? userProfile.role.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'User'}
             </p>
-            <p className="text-xs text-gray-500 truncate">
+            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
               {userProfile?.facilityName || 'Healthcare Professional'}
             </p>
           </div>
@@ -125,19 +134,19 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
               href={item.href}
               className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors duration-150 ease-in-out ${
                 isActive
-                  ? 'bg-indigo-100 text-indigo-900 border-r-2 border-indigo-600'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-900 dark:text-indigo-100 border-r-2 border-indigo-600'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
               }`}
             >
               <item.icon
                 className={`mr-3 h-5 w-5 flex-shrink-0 ${
-                  isActive ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-500'
+                  isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400'
                 }`}
               />
               <div className="flex-1">
                 <div className="text-sm font-medium">{item.name}</div>
                 {item.description && (
-                  <div className="text-xs text-gray-500 mt-0.5 hidden sm:block">{item.description}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 hidden sm:block">{item.description}</div>
                 )}
               </div>
             </Link>
@@ -146,7 +155,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
       </nav>
 
         {/* Footer - User Dropdown */}
-        <div className="px-4 py-4 border-t border-gray-200">
+        <div className="px-4 py-4 border-t border-gray-200 dark:border-gray-700">
           <UserDropdown />
         </div>
       </div>
