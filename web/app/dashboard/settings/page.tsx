@@ -1,9 +1,17 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Settings() {
   const { user, userProfile } = useAuth();
+  const [displayName, setDisplayName] = useState('');
+  const [facilityName, setFacilityName] = useState('');
+
+  useEffect(() => {
+    setDisplayName(user?.displayName || '');
+    setFacilityName(userProfile?.facilityName || '');
+  }, [user, userProfile]);
 
   return (
     <div className="space-y-6">
@@ -35,7 +43,8 @@ export default function Settings() {
               <label className="block text-sm font-medium text-gray-700">Display Name</label>
               <input
                 type="text"
-                value={user?.displayName || ''}
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
@@ -52,7 +61,8 @@ export default function Settings() {
               <label className="block text-sm font-medium text-gray-700">Facility Name</label>
               <input
                 type="text"
-                value={userProfile?.facilityName || ''}
+                value={facilityName}
+                onChange={(e) => setFacilityName(e.target.value)}
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
