@@ -16,7 +16,8 @@ import {
   MapPinIcon,
   ShieldCheckIcon,
   AcademicCapIcon,
-  CogIcon
+  CogIcon,
+  SparklesIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { CalorieTrackingModal } from '@/components/CalorieTrackingModal';
@@ -91,6 +92,13 @@ export default function Dashboard() {
       href: '/dashboard/consultations',
       gradient: 'from-yellow-400 to-orange-500',
       comingSoon: true
+    },
+    {
+      title: 'Food & Diet Planning',
+      description: 'Comprehensive nutrition guidance with video walkthroughs, in-depth food preparation explanations, audio analysis, and interactive chat support for personalized dietary planning',
+      icon: SparklesIcon,
+      href: '/dashboard/food-diet-planning',
+      gradient: 'from-emerald-400 to-green-500'
     }
   ];
 
@@ -221,7 +229,7 @@ export default function Dashboard() {
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             {currentRoleConfig.welcomeTitle}
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+          <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
             {currentRoleConfig.welcomeDescription}
           </p>
         </div>
